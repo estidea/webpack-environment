@@ -1,11 +1,18 @@
 // basic vars
+let path = require('path');
 
 // additional plugins
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // module settings
-module.exports = {
+let conf = {
+	entry: './src/index.js',
+	output: {
+		path: path.resolve(__dirname, './dist'),
+		filename: 'main.js',
+		publicPath: '/'
+	},
 	module: {
 		rules: [
 			{
@@ -55,4 +62,12 @@ module.exports = {
 			filename: "./index.html"
 		})
 	],
+	devServer: {
+		overlay: true
+	}
+}
+
+module.exports = (env, options) => {
+	let production = options.mode === 'production';
+	return conf;
 }
